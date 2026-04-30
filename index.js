@@ -1,23 +1,35 @@
 const express = require('express');
 const app = express();
 
-// Crear nuestra API
-app.get('/', (req, res) => {
-    res.send("Hola mundo")
+app.use(express.json());
+let tareas = [];
+
+// Nuestra Aplicacion CRUD: To-DO (Lista de Tareas)
+
+// Read - GET
+app.get('/',(req, res) => {
+    res.json(tareas)
 })
 
-// Crear nuestra API
-app.get('/sebas', (req, res) => {
-    res.send("Hola Sebitas")
+// Create -POST
+app.post('/', (req,res) => {
+    const nueva = {
+        id: Date.now(),
+        titulo: req.body.titulo
+    }
+    tareas.push(nueva)
+    res.json(nueva)
 })
 
-// To-Do
-app.get('/tareas', (req, res) => {
-    res.json([
-        { id: 1, titulo: "Aprender Node"},
-        { id: 2, titulo: "Estudiar para el examen"},
-    ])
+// Delete
+app.delete('/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    tareas = tareas.filter(t => t.id !== id) 
+    res.json({mensaje: "Eliminado"})
 })
+
+
+// Put-Patch 
 
 
 app.listen(3000, () => {
