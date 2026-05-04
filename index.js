@@ -34,25 +34,25 @@ app.put('/:id', (req, res) => {
     const id = parseInt(req.params.id)
     const { titulo, completado } = req.body
     
-    tareas = tareas.find(t => t.id === id)
+    const tarea = tareas.find(t => t.id === id)
 
-    if(!tareas) {
+    if(!tarea) {
         return res.status(404).json({
             mensaje: 'Tarea no encontrada'
         })
     }
 
     if (titulo !== undefined){
-        tareas.titulo = titulo
+        tarea.titulo = titulo
     }
 
     if(completado !== undefined){
-        tareas.completado = completado
+        tarea.completado = completado
     }
 
     res.json({
         mensaje: "Tarea actualizada",
-        tareas
+        tarea
     })
 })
 
